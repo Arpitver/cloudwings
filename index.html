@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLOUDWINGS AGENCY — Make Your Brand Fly Higher. | Digital Marketing Delhi NCR</title>
+  <meta name="description" content="CloudWings Agency helps ambitious businesses across Delhi NCR (Delhi, Noida, Greater Noida, Gurugram, Ghaziabad, Faridabad) build powerful brands and accelerate digital growth." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cw: {
+              midnight: '#030B1C',
+              navy: '#07152E',
+              electric: '#2563EB',
+              sky: '#38BDF8',
+              light: '#F5F8FF',
+              slate: '#475569'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --cw-midnight: #030B1C;
+      --cw-navy: #07152E;
+      --cw-electric: #2563EB;
+      --cw-sky: #38BDF8;
+      --cw-light: #F5F8FF;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #FFFFFF;
+      color: #07152E;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .cw-cursor-dot {
+        position: fixed;
+        top: 0; left: 0;
+        width: 10px; height: 10px;
+        background: #38BDF8;
+        border-radius: 9999px;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+      }
+      .cw-cursor-ring {
+        position: fixed;
+        top: 0; left: 0;
+        width: 36px; height: 36px;
+        border: 1.5px solid rgba(56, 189, 248, 0.55);
+        border-radius: 9999px;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+      }
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(0, -16px, 0); }
+    }
+    @keyframes floatReverse {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(0, 14px, 0); }
+    }
+    @keyframes spinOrbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.45; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.06); }
+    }
+    .animate-float-slow { animation: floatSlow 7s ease-in-out infinite; }
+    .animate-float-rev { animation: floatReverse 8.5s ease-in-out infinite; }
+    .animate-orbit { animation: spinOrbit 34s linear infinite; transform-origin: center; }
+    .animate-pulse-glow { animation: pulseGlow 6s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-float-slow, .animate-float-rev, .animate-orbit, .animate-pulse-glow {
+        animation: none !important;
+      }
+    }
+
+    .glass-dark {
+      background: rgba(7, 21, 46, 0.62);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.18);
+    }
+    .hero-mesh {
+      background:
+        radial-gradient(circle at 78% 28%, rgba(37, 99, 235, 0.34), transparent 46%),
+        radial-gradient(circle at 18% 78%, rgba(56, 189, 248, 0.2), transparent 42%),
+        linear-gradient(155deg, #030B1C 0%, #07152E 58%, #041024 100%);
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #F5F8FF; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #2563EB; }
+  </style>
+</head>
+<body class="antialiased selection:bg-cw-electric selection:text-white">
+
+  <!-- Desktop Interactive Cursor -->
+  <div id="cursorDot" class="cw-cursor-dot hidden md:block"></div>
+  <div id="cursorRing" class="cw-cursor-ring hidden md:block"></div>
+
+  <!-- Branded Preloader -->
+  <div id="cwPreloader" class="fixed inset-0 z-[100] bg-cw-midnight flex flex-col items-center justify-center transition-opacity duration-500">
+    <div class="animate-float-slow mb-4" id="preloaderLogo"></div>
+    <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-cw-electric to-cw-sky w-full origin-left animate-pulse"></div>
+    </div>
+    <p class="text-xs tracking-[0.28em] text-cw-sky/80 uppercase mt-3">Make Your Brand Fly Higher.</p>
+  </div>
+
+  <!-- Toast / Message Box -->
+  <div id="toastContainer" class="fixed bottom-24 right-5 z-[95] flex flex-col gap-2 max-w-sm pointer-events-none"></div>
+
+  <!-- Root Shell -->
+  <div id="appRoot"></div>
+
+  <script>
+    /* =====================================================================
+       1. OFFICIAL CLOUDWINGS VECTOR LOGO
+       ===================================================================== */
+    function getCloudWingsLogoSVG(variant = 'light', customLogoUrl = '') {
+      if (customLogoUrl) {
+        return `<img src="${escapeHtml(customLogoUrl)}" alt="CloudWings Agency Logo" class="h-11 w-auto object-contain" />`;
+      }
+      const cloudWordColor = variant === 'dark' ? '#FFFFFF' : '#07152E';
+      const agencyLineColor = variant === 'dark' ? '#94A3B8' : '#07152E';
+      const uid = 'cwGrad_' + Math.random().toString(36).slice(2, 7);
+      return `
+        <svg viewBox="0 0 380 112" class="h-11 sm:h-12 w-auto select-none" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="CloudWings Agency">
+          <defs>
+            <linearGradient id="${uid}_cloud" x1="12" y1="88" x2="108" y2="24" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#1D4ED8"/>
+              <stop offset="55%" stop-color="#2563EB"/>
+              <stop offset="100%" stop-color="#38BDF8"/>
+            </linearGradient>
+            <linearGradient id="${uid}_wing" x1="72" y1="84" x2="164" y2="12" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#1D4ED8"/>
+              <stop offset="50%" stop-color="#0284C7"/>
+              <stop offset="100%" stop-color="#38BDF8"/>
+            </linearGradient>
+          </defs>
+          <path d="M74 86H39C21.879 86 8 72.121 8 55C8 39.211 19.798 26.183 35.064 24.248C40.669 13.385 51.995 6 65 6C81.894 6 95.887 18.497 98.276 34.742C94.212 36.124 90.296 37.943 86.621 40.15C85.568 27.674 75.118 18 62.5 18C51.201 18 41.737 25.815 39.181 36.325C37.547 35.786 35.805 35.5 34 35.5C24.887 35.5 17.5 42.887 17.5 52C17.5 61.113 24.887 68.5 34 68.5H77.5C75.823 74.165 74.633 80.025 74 86Z" fill="url(#${uid}_cloud)"/>
+          <path d="M76 74C75 50 96 31 124 25C141 21.5 155 15 164 6C159 24 145 36 125 41C102 46.5 85 58 76 74Z" fill="url(#${uid}_wing)"/>
+          <path d="M80 83C83 63 102 49 126 45C139 42.8 150 38 158 31C152 46 139 55 121 59C102 63 88 71 80 83Z" fill="url(#${uid}_wing)"/>
+          <path d="M84 91C89 75 104 65 123 63C133 62 141 59 148 54C142 66 131 73 116 76C101 79 91 84 84 91Z" fill="url(#${uid}_wing)"/>
+          <text x="132" y="67" font-family="Plus Jakarta Sans, Inter, sans-serif" font-weight="800" font-size="37" letter-spacing="-0.8" fill="${cloudWordColor}">Cloud<tspan fill="#2563EB">Wings</tspan></text>
+          <line x1="133" y1="84" x2="176" y2="84" stroke="${agencyLineColor}" stroke-width="2" stroke-linecap="round"/>
+          <text x="254" y="89" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="14.5" letter-spacing="6.5" fill="${agencyLineColor}">AGENCY</text>
+          <line x1="331" y1="84" x2="374" y2="84" stroke="${agencyLineColor}" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      `;
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    /* =====================================================================
+       2. OFFICIAL CMS DATA (Service Areas: Delhi, Noida, Greater Noida, Gurugram, Ghaziabad, Faridabad)
+       ===================================================================== */
+    const DEFAULT_CMS_DATA = {
+      settings: {
+        companyName: 'CLOUDWINGS AGENCY',
+        tagline: 'Make Your Brand Fly Higher.',
+        phone: '+91 7376529821',
+        whatsapp: '917376529821',
+        email: 'hello@cloudwingsagency.in',
+        address: 'Delhi NCR, India',
+        serviceAreas: 'Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad',
+        businessHours: 'Mon – Sat: 10:00 AM – 7:00 PM IST',
+        footerCopyright: '© 2026 CLOUDWINGS AGENCY. All rights reserved. Serving Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad.',
+        customLogoUrl: '',
+        heroIllustrationUrl: '',
+        aboutImageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80'
+      },
+      homepage: {
+        heroHeading: 'WE HELP BRANDS TAKE OFF.',
+        heroSubheading: 'Your Vision. Our Creativity. Unlimited Digital Growth.',
+        heroDescription: 'CloudWings Agency helps ambitious businesses across Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad build powerful brands, attract the right audience and accelerate growth through strategic digital marketing, creative branding and technology-driven solutions.',
+        heroPrimaryCtaText: "Let's Grow Together",
+        heroSecondaryCtaText: 'Explore Our Services',
+        aboutHeading: "WE DON'T JUST BUILD BRANDS. WE HELP THEM SOAR.",
+        aboutIntro: 'Headquartered in Delhi NCR, CloudWings Agency is a full-service creative and performance marketing partner built for modern organizations ready to stand out in competitive digital markets across Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad.',
+        mission: 'To empower businesses across Delhi NCR with transparent, strategy-led digital marketing and cohesive brand storytelling that turns attention into sustainable revenue.',
+        vision: 'To become the most trusted creative growth partner for ambitious brands seeking clarity, measurable execution, and long-term digital equity.',
+        philosophy: 'We reject cookie-cutter templates and vanity metrics. Every campaign, website, and brand identity starts with deep audience insight and ends with purposeful execution.',
+        whyExists: 'Too many businesses invest in fragmented marketing without unified brand positioning. CloudWings bridges creative direction with performance engineering under one roof.',
+        finalCtaHeading: 'READY TO TAKE YOUR BRAND TO THE NEXT LEVEL?',
+        finalCtaDescription: "Let's turn your business vision into a powerful digital success story across Delhi NCR."
+      },
+      services: [
+        {
+          id: 'srv-seo',
+          slug: 'seo-services',
+          title: 'Search Engine Optimization (SEO)',
+          shortDesc: 'Technical SEO, local Delhi NCR search dominance, and high-intent organic content architecture that compounds qualified traffic.',
+          fullDesc: 'We engineer sustainable organic search visibility through deep technical site audits, structured schema implementation, authoritative content clusters, and hyper-local SEO targeting Delhi, Noida, Gurugram and surrounding NCR hubs.',
+          benefits: ['Technical Core Web Vitals & Crawl Optimization', 'Local Delhi NCR Map Pack & Regional Keyword Dominance', 'High-Intent Editorial Content & Internal Link Architecture', 'Transparent Monthly Search Console & Ranking Reporting'],
+          imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80',
+          published: true,
+          order: 1
+        },
+        {
+          id: 'srv-smm',
+          slug: 'social-media-marketing',
+          title: 'Social Media Marketing',
+          shortDesc: 'Editorial social storytelling, community building, and platform-native visual systems across Instagram, LinkedIn, and YouTube.',
+          fullDesc: 'We transform brand channels into magnetic communities with cohesive visual grids, short-form video series, executive LinkedIn thought leadership, and active audience engagement.',
+          benefits: ['Platform-Specific Content Pillars & Monthly Calendars', 'High-Craft Reels, Carousels & LinkedIn Visual Systems', 'Active Community Management & Brand Voice Consistency', 'Audience Growth & Engagement Quality Analytics'],
+          imageUrl: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=900&q=80',
+          published: true,
+          order: 2
+        },
+        {
+          id: 'srv-ppc',
+          slug: 'google-ads-and-ppc',
+          title: 'Google Ads and PPC',
+          shortDesc: 'Precision-engineered Search, Performance Max, and Display campaigns built to capture high-intent buyers with disciplined ROAS.',
+          fullDesc: 'Every rupee of ad spend is mapped to buyer intent. We build tightly structured search campaigns, custom landing pages, negative keyword shields, and server-side conversion tracking.',
+          benefits: ['High-Intent Search & Performance Max Campaign Architecture', 'Dedicated Conversion-Focused Landing Page Alignment', 'Granular Bid Strategy, Negative Keyword & Quality Score Optimization', 'Real-Time Lead & Revenue Attribution Dashboards'],
+          imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80',
+          published: true,
+          order: 3
+        },
+        {
+          id: 'srv-meta',
+          slug: 'meta-ads',
+          title: 'Meta Ads and Performance Marketing',
+          shortDesc: 'Full-funnel Facebook and Instagram paid acquisition pairing thumb-stopping creative testing with disciplined audience scaling.',
+          fullDesc: 'We combine rapid creative experimentation with full-funnel retargeting on Meta platforms to generate qualified B2B enquiries, clinic bookings, real estate site visits, and D2C orders across Delhi NCR.',
+          benefits: ['Scroll-Stopping Static, Carousel & Video Ad Creative Testing', 'Full-Funnel Prospecting & Dynamic Retargeting Flows', 'Pixel & Conversions API (CAPI) Event Accuracy', 'Continuous Creative Fatigue Monitoring & Budget Scaling'],
+          imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80', // Verified high-res marketing analytics dashboard image
+          published: true,
+          order: 4
+        },
+        {
+          id: 'srv-web',
+          slug: 'website-development',
+          title: 'Website Design and Development',
+          shortDesc: 'Bespoke, ultra-fast, responsive websites and custom web applications engineered for conversion, accessibility, and SEO.',
+          fullDesc: 'Your website is your flagship digital headquarters. We design and build custom marketing websites, interactive product showcases, and CMS-powered platforms that load fast and convert visitors.',
+          benefits: ['Custom UI/UX Design Systems Tailored to Your Brand', 'Mobile-First Responsive Architecture & Sub-Second Speed', 'Clean Semantic HTML, Schema Markup & CMS Integration', 'Enterprise Security, SSL & Scalable Cloud Deployment'],
+          imageUrl: 'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=900&q=80',
+          published: true,
+          order: 5
+        },
+        {
+          id: 'srv-brand',
+          slug: 'branding-and-graphic-design',
+          title: 'Branding and Graphic Design',
+          shortDesc: 'Distinctive brand identities, visual design systems, pitch decks, and packaging that command immediate category authority.',
+          fullDesc: 'We craft timeless visual identities—from logo architecture and typography systems to comprehensive brand guidelines and marketing collateral—that make your business unmistakable.',
+          benefits: ['Brand Positioning, Naming & Visual Identity Systems', 'Logo Design, Color Palette & Typography Guidelines', 'Corporate Pitch Decks, Brochures & Packaging Collateral', 'Consistent Cross-Channel Digital & Print Design Kits'],
+          imageUrl: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=900&q=80',
+          published: true,
+          order: 6
+        },
+        {
+          id: 'srv-content',
+          slug: 'content-marketing',
+          title: 'Content Marketing',
+          shortDesc: 'Research-backed editorial articles, whitepapers, website copywriting, and video scripts that build lasting brand authority.',
+          fullDesc: 'Great marketing is built on clarity and substance. Our strategists and writers produce authoritative long-form content, conversion copywriting, and executive narratives that educate buyers.',
+          benefits: ['Conversion-Focused Website & Landing Page Copywriting', 'SEO Pillar Articles, Whitepapers & Industry Guides', 'Executive LinkedIn Ghostwriting & Newsletter Strategy', 'Brand Messaging Frameworks & Tone-of-Voice Playbooks'],
+          imageUrl: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=80',
+          published: true,
+          order: 7
+        },
+        {
+          id: 'srv-video',
+          slug: 'video-editing',
+          title: 'Video Editing and Creative Production',
+          shortDesc: 'High-retention brand films, motion graphics, product reels, and performance video ads edited for maximum watch time.',
+          fullDesc: 'Video is the highest-leverage medium in modern digital marketing. We transform raw footage and brand concepts into crisp commercials, dynamic motion graphics, and vertical social reels.',
+          benefits: ['High-Retention Reels, Shorts & Performance Ad Cuts', '2D/3D Motion Graphics, Lower Thirds & Kinetic Typography', 'Corporate Brand Films, Founder Stories & Product Demos', 'Sound Design, Color Grading & Multi-Aspect Delivery'],
+          imageUrl: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=900&q=80',
+          published: true,
+          order: 8
+        },
+        {
+          id: 'srv-ecom',
+          slug: 'ecommerce-marketing',
+          title: 'E-commerce Marketing',
+          shortDesc: 'Full-funnel D2C growth combining Shopify/WooCommerce optimization, catalog ads, retention email flows, and CRO.',
+          fullDesc: 'We help D2C and retail brands scale online revenue sustainably by optimizing product detail pages, Google Shopping feeds, Meta dynamic catalog campaigns, and lifecycle retention.',
+          benefits: ['Storefront Conversion Rate Optimization (CRO) & UX', 'Google Shopping Feed & Meta Dynamic Product Ads', 'Abandoned Cart, Post-Purchase & Lifecycle Email Flows', 'Average Order Value (AOV) & Repeat Purchase Strategy'],
+          imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80',
+          published: true,
+          order: 9
+        },
+        {
+          id: 'srv-strategy',
+          slug: 'digital-marketing-strategy',
+          title: 'Digital Marketing Strategy',
+          shortDesc: 'Comprehensive market research, competitor intelligence, channel mix modeling, and 90-day growth roadmaps.',
+          fullDesc: 'Before spending a single rupee on execution, we map your total addressable market, audit competitors across Delhi NCR, and deliver a prioritized growth blueprint.',
+          benefits: ['Competitive Landscape & Category Positioning Audit', 'Ideal Customer Profile (ICP) & Buyer Journey Mapping', 'Channel Prioritization & Budget Allocation Blueprint', 'KPI Framework & Quarterly Execution Roadmap'],
+          imageUrl: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80',
+          published: true,
+          order: 10
+        }
+      ],
+      industries: [
+        { id: 'ind-1', name: 'Real Estate', summary: 'Qualified buyer lead generation and hyper-local project launches across Delhi, Noida, and Gurugram.', enabled: true },
+        { id: 'ind-2', name: 'Healthcare', summary: 'Ethical patient acquisition, local clinic SEO, and appointment funnel design across Delhi NCR.', enabled: true },
+        { id: 'ind-3', name: 'Education', summary: 'Student admission campaigns, webinar funnels, and institutional brand positioning in Noida and Greater Noida.', enabled: true },
+        { id: 'ind-4', name: 'E-commerce', summary: 'D2C storefront CRO and catalog performance advertising for retail brands across Ghaziabad and Faridabad.', enabled: true },
+        { id: 'ind-5', name: 'Hospitality', summary: 'Direct booking growth and experiential social storytelling for hotels and restaurants.', enabled: true },
+        { id: 'ind-6', name: 'Technology', summary: 'B2B SaaS demand generation and product-led content ecosystems for NCR tech hubs.', enabled: true },
+        { id: 'ind-7', name: 'Manufacturing', summary: 'Industrial B2B lead pipelines and export market search visibility across industrial corridors.', enabled: true },
+        { id: 'ind-8', name: 'Retail', summary: 'Omnichannel footfall campaigns and seasonal promotional creative systems.', enabled: true },
+        { id: 'ind-9', name: 'Professional Services', summary: 'Authority positioning and inbound consultation pipelines for legal and financial advisory firms.', enabled: true }
+      ],
+      portfolio: [
+        {
+          id: 'proj-1',
+          title: 'Skyline Residences — Delhi NCR Expressway Launch Concept',
+          category: 'Real Estate',
+          industry: 'Real Estate',
+          isSample: true,
+          summary: 'Sample Concept: Integrated landing page experience and hyper-local Google + Meta lead funnel designed for luxury residential developments.',
+          imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80',
+          published: true
+        },
+        {
+          id: 'proj-2',
+          title: 'Arogya Multispecialty Care — Delhi NCR Digital Presence',
+          category: 'Healthcare',
+          industry: 'Healthcare',
+          isSample: true,
+          summary: 'Sample Concept: Patient-centric healthcare web portal and department-wise local SEO architecture across Delhi NCR clinics.',
+          imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1000&q=80',
+          published: true
+        },
+        {
+          id: 'proj-3',
+          title: 'Verve Botanics — D2C Skincare Brand Identity & Storefront',
+          category: 'E-commerce',
+          industry: 'E-commerce',
+          isSample: true,
+          summary: 'Sample Concept: Complete visual identity, packaging art direction, and high-converting D2C storefront UX.',
+          imageUrl: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1000&q=80',
+          published: true
+        },
+        {
+          id: 'proj-4',
+          title: 'NexaCloud ERP — B2B SaaS Demand Generation Blueprint',
+          category: 'Technology',
+          industry: 'Technology',
+          isSample: true,
+          summary: 'Sample Concept: B2B positioning, interactive ROI calculator web experience, and account-focused LinkedIn & Search campaigns.',
+          imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&q=80',
+          published: true
+        }
+      ],
+      testimonials: [
+        { id: 't-1', author: 'Vikram Sharma', role: 'Managing Director, NCR Infrastructure', quote: 'CloudWings Agency transformed our digital acquisition pipeline. Their disciplined Meta Ads and SEO strategy delivered tangible ROI within 60 days.', published: true },
+        { id: 't-2', author: 'Dr. Ananya Sen', role: 'Founder, HealthFirst Delhi NCR', quote: 'Professional, responsive, and deeply knowledgeable about digital marketing across Delhi, Noida, and Gurugram. Highly recommended.', published: true }
+      ],
+      blogs: [
+        {
+          id: 'blog-1',
+          slug: 'local-seo-blueprint-delhi-ncr-businesses',
+          title: 'The 2026 Local SEO Blueprint for Ambitious Brands in Delhi NCR',
+          category: 'SEO',
+          author: 'CloudWings Editorial Team',
+          date: 'November 10, 2026',
+          readTime: '6 min read',
+          excerpt: 'How businesses across Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad can capture high-intent regional search traffic.',
+          imageUrl: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1000&q=80',
+          published: true
+        },
+        {
+          id: 'blog-2',
+          slug: 'ai-in-performance-marketing-creative-strategy',
+          title: 'AI in Performance Marketing: Why Human Creative Direction Matters More Than Ever',
+          category: 'AI in Marketing',
+          author: 'CloudWings Strategy Desk',
+          date: 'November 04, 2026',
+          readTime: '5 min read',
+          excerpt: 'As automated bidding and algorithmic ad delivery become standard, distinctive brand storytelling is your true competitive moat.',
+          imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1000&q=80',
+          published: true
+        }
+      ],
+      leads: [
+        {
+          id: 'LEAD-1001',
+          fullName: 'Rohan Malhotra',
+          email: 'rohan@malhotradevelopers.example',
+          phone: '+91 9811000000',
+          company: 'Sample Enquiry — NCR Buildtech',
+          requiredServices: 'Meta Ads and Performance Marketing',
+          projectDescription: 'Looking for high-converting Meta Ads campaign management in Delhi NCR.',
+          status: 'New',
+          submittedAt: '2026-11-16 11:30 IST'
+        }
+      ],
+      subscribers: [
+        { id: 'SUB-01', email: 'insights-demo@cloudwingsagency.in', subscribedAt: '2026-11-12' }
+      ],
+      media: [
+        { id: 'med-1', name: 'Meta-Ads-Performance.jpg', category: 'Services', url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80', alt: 'Meta Ads & Performance Marketing' },
+        { id: 'med-2', name: 'About-Team.jpg', category: 'About', url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80', alt: 'CloudWings Team' }
+      ]
+    };
+
+    /* =====================================================================
+       3. STATE MANAGEMENT
+       ===================================================================== */
+    const STORAGE_KEY = 'cloudwings_cms_state_v5';
+    let cmsData = loadCmsData();
+
+    let uiState = {
+      mode: 'public', // 'public' | 'admin'
+      publicRoute: 'home',
+      selectedSlug: null,
+      portfolioFilter: 'All',
+      mobileMenuOpen: false,
+      adminAuthenticated: false,
+      adminTab: 'dashboard'
+    };
+
+    function loadCmsData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          return { ...structuredClone(DEFAULT_CMS_DATA), ...JSON.parse(raw) };
+        }
+      } catch (e) {
+        console.warn('Fallback to default CMS data:', e);
+      }
+      return structuredClone(DEFAULT_CMS_DATA);
+    }
+
+    function saveCmsData(logAction = null) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cmsData));
+      } catch (e) {
+        showToast('Storage quota warning.', 'error');
+      }
+    }
+
+    /* =====================================================================
+       4. UI UTILITIES
+       ===================================================================== */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const el = document.createElement('div');
+      const colors = type === 'success'
+        ? 'bg-emerald-600 text-white border-emerald-400/40'
+        : type === 'error'
+          ? 'bg-red-600 text-white border-red-400/40'
+          : 'bg-cw-navy text-white border-cw-sky/30';
+      el.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-xl border text-sm font-medium flex items-center gap-2.5 transition-all duration-300 ${colors}`;
+      el.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '!' : '✦'}</span><span>${escapeHtml(message)}</span>`;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(8px)';
+        setTimeout(() => el.remove(), 300);
+      }, 3800);
+    }
+
+    function navigatePublic(route, slug = null) {
+      uiState.mode = 'public';
+      uiState.publicRoute = route;
+      uiState.selectedSlug = slug;
+      uiState.mobileMenuOpen = false;
+      renderApp();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openAdminMode(tab = 'dashboard') {
+      uiState.mode = 'admin';
+      uiState.adminTab = tab;
+      uiState.mobileMenuOpen = false;
+      renderApp();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getWhatsAppUrl(customText = null) {
+      const msg = customText || 'Hello CloudWings Agency, I am interested in your digital marketing services across Delhi NCR. Please share more details.';
+      return `https://wa.me/${cmsData.settings.whatsapp}?text=${encodeURIComponent(msg)}`;
+    }
+
+    /* =====================================================================
+       5. 3D CLOUD HERO WORLD
+       ===================================================================== */
+    function renderHero3DCloudWorld() {
+      if (cmsData.settings.heroIllustrationUrl) {
+        return `
+          <div class="relative rounded-3xl overflow-hidden border border-cw-sky/25 shadow-2xl">
+            <img src="${escapeHtml(cmsData.settings.heroIllustrationUrl)}" alt="CloudWings Digital Growth World" class="w-full h-[420px] sm:h-[490px] object-cover" onerror="this.src='https://placehold.co/800x600/07152E/38BDF8?text=CloudWings+Agency'" />
+            <div class="absolute inset-0 bg-gradient-to-t from-cw-midnight/70 via-transparent to-transparent"></div>
+          </div>
+        `;
+      }
+      return `
+        <div class="relative w-full h-[390px] sm:h-[470px] lg:h-[520px] flex items-center justify-center select-none">
+          <div class="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-cw-electric/30 blur-3xl animate-pulse-glow"></div>
+          <div class="absolute w-56 h-56 rounded-full bg-cw-sky/20 blur-2xl -top-4 right-6 animate-float-rev"></div>
+
+          <svg viewBox="0 0 600 540" class="w-full h-full max-w-[560px] drop-shadow-[0_25px_55px_rgba(37,99,235,0.35)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="cw3dCloudMain" x1="120" y1="180" x2="480" y2="390" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FFFFFF"/>
+                <stop offset="48%" stop-color="#DBEAFE"/>
+                <stop offset="100%" stop-color="#38BDF8"/>
+              </linearGradient>
+              <linearGradient id="cw3dWingGrad" x1="250" y1="310" x2="495" y2="95" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#1D4ED8"/>
+                <stop offset="50%" stop-color="#2563EB"/>
+                <stop offset="100%" stop-color="#38BDF8"/>
+              </linearGradient>
+              <linearGradient id="cw3dRing" x1="70" y1="90" x2="530" y2="450" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.85"/>
+                <stop offset="50%" stop-color="#2563EB" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.8"/>
+              </linearGradient>
+            </defs>
+            <g class="animate-orbit">
+              <ellipse cx="300" cy="275" rx="248" ry="112" transform="rotate(-18 300 275)" stroke="url(#cw3dRing)" stroke-width="1.6" stroke-dasharray="6 8"/>
+              <circle cx="534" cy="202" r="7" fill="#38BDF8"/>
+              <circle cx="66" cy="348" r="5" fill="#2563EB"/>
+            </g>
+            <g class="animate-float-slow">
+              <ellipse cx="295" cy="415" rx="165" ry="22" fill="rgba(3,11,28,0.65)"/>
+              <path d="M398 372H184C135.4 372 96 332.6 96 284C96 239.2 129.5 202.2 172.8 196.7C190.4 164.2 224.8 142 264.5 142C321.9 142 368.5 188.6 368.5 246C368.5 249.8 368.3 253.5 367.9 257.2C395.8 266.8 416 293.3 416 324.5C416 350.7 394.7 372 368.5 372H398Z" fill="url(#cw3dCloudMain)"/>
+              <path d="M266 324C264 252 325 196 406 178C455 167 495 148 522 120C508 174 467 210 409 224C342 240 293 275 266 324Z" fill="url(#cw3dWingGrad)"/>
+            </g>
+          </svg>
+        </div>
+      `;
+    }
+
+    /* =====================================================================
+       6. HEADER & FOOTER
+       ===================================================================== */
+    function renderPublicHeader() {
+      const r = uiState.publicRoute;
+      const navLinkClass = (target) =>
+        `text-sm font-medium transition-colors cursor-pointer ${
+          r === target ? 'text-cw-electric font-semibold' : 'text-cw-navy/80 hover:text-cw-electric'
+        }`;
+
+      return `
+        <header class="sticky top-0 z-50 transition-all duration-300 bg-white/92 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
+          <div class="bg-cw-midnight text-slate-300 text-xs py-2 px-4 sm:px-8 border-b border-white/10">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+              <span class="inline-flex items-center gap-1.5 text-cw-sky font-medium">
+                <span class="w-1.5 h-1.5 rounded-full bg-cw-sky animate-pulse"></span>
+                Delhi, Noida, Greater Noida, Gurugram, Ghaziabad & Faridabad
+              </span>
+              <div class="flex items-center gap-4">
+                <a href="tel:${escapeHtml(cmsData.settings.phone.replace(/\s+/g, ''))}" class="hover:text-white transition font-medium">
+                  📞 ${escapeHtml(cmsData.settings.phone)}
+                </a>
+                <button onclick="openAdminMode('dashboard')" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cw-electric/25 text-cw-sky border border-cw-sky/30 hover:bg-cw-electric hover:text-white transition font-semibold">
+                  <span>⚙</span> Admin CMS (/admin)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
+            <a onclick="navigatePublic('home')" class="cursor-pointer flex items-center" aria-label="CloudWings Agency Home">
+              ${getCloudWingsLogoSVG('light', cmsData.settings.customLogoUrl)}
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-7">
+              <a onclick="navigatePublic('home')" class="${navLinkClass('home')}">Home</a>
+              <a onclick="navigatePublic('about')" class="${navLinkClass('about')}">About</a>
+              <a onclick="navigatePublic('services')" class="${navLinkClass('services')}">Services</a>
+              <a onclick="navigatePublic('industries')" class="${navLinkClass('industries')}">Industries</a>
+              <a onclick="navigatePublic('portfolio')" class="${navLinkClass('portfolio')}">Our Work</a>
+              <a onclick="navigatePublic('blog')" class="${navLinkClass('blog')}">Insights</a>
+              <a onclick="navigatePublic('contact')" class="${navLinkClass('contact')}">Contact</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+              <button onclick="navigatePublic('contact')" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-cw-electric text-white text-sm font-semibold shadow-lg shadow-cw-electric/30 hover:bg-cw-navy transition-all">
+                <span>Let's Talk</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </button>
+              <button onclick="uiState.mobileMenuOpen = !uiState.mobileMenuOpen; renderApp()" class="lg:hidden p-2.5 rounded-xl border border-slate-200 text-cw-navy hover:bg-cw-light" aria-label="Toggle Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${uiState.mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          ${uiState.mobileMenuOpen ? `
+            <div class="lg:hidden bg-white border-t border-slate-200 px-6 py-6 space-y-4 shadow-2xl">
+              <div class="grid grid-cols-2 gap-3">
+                <button onclick="navigatePublic('home')" class="text-left py-2 font-semibold text-cw-navy">Home</button>
+                <button onclick="navigatePublic('about')" class="text-left py-2 font-semibold text-cw-navy">About Us</button>
+                <button onclick="navigatePublic('services')" class="text-left py-2 font-semibold text-cw-navy">All Services</button>
+                <button onclick="navigatePublic('industries')" class="text-left py-2 font-semibold text-cw-navy">Industries</button>
+                <button onclick="navigatePublic('portfolio')" class="text-left py-2 font-semibold text-cw-navy">Our Work</button>
+                <button onclick="navigatePublic('blog')" class="text-left py-2 font-semibold text-cw-navy">Insights</button>
+                <button onclick="navigatePublic('contact')" class="text-left py-2 font-semibold text-cw-navy">Contact Us</button>
+              </div>
+              <button onclick="openAdminMode('dashboard')" class="w-full py-3 rounded-xl bg-cw-navy text-cw-sky font-semibold text-center">Open Admin CMS (/admin)</button>
+            </div>
+          ` : ''}
+        </header>
+      `;
+    }
+
+    function renderPublicFooter() {
+      return `
+        <footer class="bg-cw-midnight text-slate-300 border-t border-white/10">
+          <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 pb-12 border-b border-white/10">
+            <div class="glass-dark rounded-3xl p-8 md:p-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-widest text-cw-sky">CloudWings Insights Dispatch</span>
+                <h3 class="text-2xl font-bold text-white mt-1">Strategic Growth Notes for Delhi NCR Leaders</h3>
+                <p class="text-sm text-slate-300 mt-1">Actionable frameworks on SEO, performance media, and brand design.</p>
+              </div>
+              <form onsubmit="handleNewsletterSubmit(event)" class="w-full lg:w-auto flex flex-col sm:flex-row gap-3">
+                <input type="email" id="footerNewsletterEmail" required placeholder="Enter your business email" class="px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-cw-sky min-w-[260px]" />
+                <button type="submit" class="px-6 py-3 rounded-xl bg-cw-electric hover:bg-cw-sky hover:text-cw-midnight text-white font-semibold text-sm transition">Subscribe</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="max-w-7xl mx-auto px-4 sm:px-8 py-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <div>
+              <div class="mb-4">${getCloudWingsLogoSVG('dark', cmsData.settings.customLogoUrl)}</div>
+              <p class="text-sm font-semibold text-cw-sky mb-2">${escapeHtml(cmsData.settings.tagline)}</p>
+              <p class="text-sm text-slate-400 leading-relaxed">
+                Full-service digital marketing, creative branding, web development, and performance marketing agency serving Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad.
+              </p>
+              <div class="mt-5 space-y-1.5 text-sm">
+                <div><a href="tel:${escapeHtml(cmsData.settings.phone.replace(/\s+/g, ''))}" class="text-white hover:text-cw-sky font-medium">📞 ${escapeHtml(cmsData.settings.phone)}</a></div>
+                <div><a href="${getWhatsAppUrl()}" target="_blank" rel="noopener" class="text-emerald-400 hover:underline font-medium">💬 WhatsApp: ${escapeHtml(cmsData.settings.phone)}</a></div>
+                <div class="text-slate-400">📍 ${escapeHtml(cmsData.settings.address)}</div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Core Services</h4>
+              <ul class="space-y-2.5 text-sm">
+                ${cmsData.services.filter(s => s.published).slice(0, 6).map(s => `
+                  <li><button onclick="navigatePublic('service-detail', '${s.slug}')" class="text-slate-400 hover:text-cw-sky transition text-left">${escapeHtml(s.title)}</button></li>
+                `).join('')}
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Agency & Pages</h4>
+              <ul class="space-y-2.5 text-sm">
+                <li><button onclick="navigatePublic('about')" class="text-slate-400 hover:text-cw-sky transition">About CloudWings</button></li>
+                <li><button onclick="navigatePublic('services')" class="text-slate-400 hover:text-cw-sky transition">All 10 Services</button></li>
+                <li><button onclick="navigatePublic('portfolio')" class="text-slate-400 hover:text-cw-sky transition">Portfolio & Case Studies</button></li>
+                <li><button onclick="navigatePublic('contact')" class="text-slate-400 hover:text-cw-sky transition">Contact Us</button></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Service Locations</h4>
+              <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                Proudly serving clients across Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad.
+              </p>
+              <button onclick="openAdminMode('dashboard')" class="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-cw-electric text-slate-200 hover:text-white border border-white/15 text-xs font-semibold transition">
+                Launch Admin CMS Dashboard →
+              </button>
+            </div>
+          </div>
+
+          <div class="border-t border-white/10 py-6 px-4 sm:px-8 text-xs text-slate-400">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p>${escapeHtml(cmsData.settings.footerCopyright)}</p>
+            </div>
+          </div>
+        </footer>
+
+        <a href="${getWhatsAppUrl()}" target="_blank" rel="noopener" aria-label="WhatsApp"
+           class="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2.5 px-4 py-3 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm shadow-2xl transition-transform hover:scale-105">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20.52 3.48A11.86 11.86 0 0012.06 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.15 1.6 5.95L0 24l6.33-1.66a11.86 11.86 0 005.73 1.46h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.45-8.42zM12.07 21.8h-.01a9.87 9.87 0 01-5.03-1.38l-.36-.21-3.76.98 1-3.66-.24-.38a9.85 9.85 0 01-1.51-5.25c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.13 1.03 7 2.9a9.83 9.83 0 012.89 7c0 5.46-4.44 9.89-9.88 9.89zm5.43-7.41c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
+          <span class="hidden sm:inline">WhatsApp Us</span>
+        </a>
+
+        <button onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"
+                class="fixed bottom-5 left-5 z-40 w-11 h-11 rounded-full bg-cw-navy/90 hover:bg-cw-electric text-white border border-white/15 shadow-xl flex items-center justify-center transition">
+          ↑
+        </button>
+      `;
+    }
+
+    /* =====================================================================
+       7. HOMEPAGE (All 11 sections fully rendered with zero blank spaces)
+       ===================================================================== */
+    function renderHomeView() {
+      const hp = cmsData.homepage;
+      const publishedServices = cmsData.services.filter(s => s.published).sort((a, b) => a.order - b.order);
+      const enabledIndustries = cmsData.industries.filter(i => i.enabled);
+      const filteredProjects = cmsData.portfolio.filter(p => p.published);
+      const publishedTestimonials = cmsData.testimonials.filter(t => t.published);
+      const latestBlogs = cmsData.blogs.filter(b => b.published).slice(0, 3);
+
+      return `
+        <!-- Section 1: Hero Section -->
+        <section class="hero-mesh text-white relative overflow-hidden pt-12 pb-20 lg:py-24">
+          <div class="max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div class="lg:col-span-7 space-y-6">
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-dark text-xs font-semibold tracking-wider uppercase text-cw-sky">
+                <span class="w-2 h-2 rounded-full bg-cw-sky"></span>
+                ${escapeHtml(cmsData.settings.tagline)} • Delhi, Noida, Gurugram
+              </div>
+              <h1 class="font-display text-4xl sm:text-5xl lg:text-[64px] font-extrabold tracking-tight leading-[1.06]">
+                ${escapeHtml(hp.heroHeading)}
+              </h1>
+              <p class="text-xl sm:text-2xl font-semibold text-cw-sky">
+                ${escapeHtml(hp.heroSubheading)}
+              </p>
+              <p class="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
+                ${escapeHtml(hp.heroDescription)}
+              </p>
+              <div class="pt-2 flex flex-wrap items-center gap-4">
+                <button onclick="navigatePublic('contact')" class="px-7 py-4 rounded-full bg-cw-electric hover:bg-cw-sky hover:text-cw-midnight text-white font-bold text-sm sm:text-base shadow-xl transition-all">
+                  Let's Grow Together →
+                </button>
+                <button onclick="navigatePublic('services')" class="px-7 py-4 rounded-full glass-dark hover:bg-white/15 text-white font-semibold text-sm sm:text-base transition">
+                  Explore Our Services
+                </button>
+              </div>
+            </div>
+            <div class="lg:col-span-5">
+              ${renderHero3DCloudWorld()}
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: About Us -->
+        <section class="py-20 lg:py-28 bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-6 space-y-6">
+              <span class="text-xs font-bold uppercase tracking-[0.22em] text-cw-electric">About CloudWings Agency</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-cw-navy leading-tight">
+                ${escapeHtml(hp.aboutHeading)}
+              </h2>
+              <p class="text-slate-600 text-base leading-relaxed">
+                ${escapeHtml(hp.aboutIntro)}
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div class="p-5 rounded-2xl bg-cw-light border border-slate-200">
+                  <div class="font-bold text-cw-navy mb-1">Our Mission</div>
+                  <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(hp.mission)}</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-cw-light border border-slate-200">
+                  <div class="font-bold text-cw-navy mb-1">Our Vision</div>
+                  <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(hp.vision)}</p>
+                </div>
+              </div>
+            </div>
+            <div class="lg:col-span-6">
+              <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 h-[400px]">
+                <img src="${escapeHtml(cmsData.settings.aboutImageUrl)}" alt="CloudWings Team in Delhi NCR" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/900x600/07152E/38BDF8?text=CloudWings+Team'" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Services (All 10 Services with crystal clear images including Service 4 Meta Ads) -->
+        <section class="py-20 lg:py-28 bg-cw-light border-y border-slate-200/70">
+          <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-[0.22em] text-cw-electric">Our Capabilities</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-cw-navy mt-2">
+                  360° DIGITAL GROWTH SERVICES
+                </h2>
+              </div>
+              <p class="text-slate-600 max-w-md text-sm sm:text-base">
+                Ten specialized disciplines engineered across Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${publishedServices.map((srv, idx) => `
+                <article class="group bg-white rounded-3xl overflow-hidden border border-slate-200/95 hover:border-cw-electric/50 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
+                  <div>
+                    <div class="h-48 w-full overflow-hidden relative bg-cw-midnight">
+                      <img src="${escapeHtml(srv.imageUrl)}" alt="${escapeHtml(srv.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/800x450/07152E/38BDF8?text=${encodeURIComponent(srv.title)}'" />
+                      <div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-cw-navy/90 text-cw-sky text-xs font-bold shadow">
+                        0${idx + 1}
+                      </div>
+                    </div>
+                    <div class="p-7 pb-4">
+                      <h3 class="text-xl font-bold text-cw-navy group-hover:text-cw-electric transition mb-3">
+                        ${escapeHtml(srv.title)}
+                      </h3>
+                      <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        ${escapeHtml(srv.shortDesc)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="p-7 pt-0 flex items-center justify-between gap-3">
+                    <button onclick="navigatePublic('service-detail', '${srv.slug}')" class="text-sm font-bold text-cw-electric hover:text-cw-navy transition inline-flex items-center gap-1">
+                      Learn More <span>→</span>
+                    </button>
+                    <button onclick="navigatePublic('contact')" class="text-xs font-semibold px-3.5 py-2 rounded-full bg-cw-light text-cw-navy hover:bg-cw-navy hover:text-white transition">
+                      Enquire
+                    </button>
+                  </div>
+                </article>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Industries We Serve -->
+        <section class="py-20 lg:py-28 bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+              <span class="text-xs font-bold uppercase tracking-[0.22em] text-cw-electric">Industry Expertise</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-cw-navy mt-2">INDUSTRIES WE SERVE IN DELHI NCR</h2>
+              <p class="text-slate-600 text-sm sm:text-base mt-2">Tailored digital marketing across Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${enabledIndustries.map(ind => `
+                <div class="p-7 rounded-3xl bg-cw-light border border-slate-200 hover:border-cw-electric/40 hover:shadow-xl transition flex flex-col justify-between">
+                  <div>
+                    <h3 class="text-xl font-bold text-cw-navy mb-2">${escapeHtml(ind.name)}</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">${escapeHtml(ind.summary)}</p>
+                  </div>
+                  <button onclick="navigatePublic('contact')" class="mt-6 text-xs font-bold text-cw-electric inline-flex items-center gap-1">Request Sector Strategy →</button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Why Choose CloudWings -->
+        <section class="py-20 lg:py-28 hero-mesh text-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+              <span class="text-xs font-bold uppercase tracking-[0.22em] text-cw-sky">The CloudWings Advantage</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold mt-2">WHY AMBITIOUS BRANDS CHOOSE US</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div class="glass-dark p-8 rounded-3xl border border-white/10">
+                <div class="text-2xl font-extrabold text-cw-sky mb-3">01</div>
+                <h3 class="text-xl font-bold mb-2">Creative Strategies</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">Original brand storytelling and high-converting visual systems designed to capture attention.</p>
+              </div>
+              <div class="glass-dark p-8 rounded-3xl border border-white/10">
+                <div class="text-2xl font-extrabold text-cw-sky mb-3">02</div>
+                <h3 class="text-xl font-bold mb-2">Data-Driven Execution</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">Every campaign is backed by rigorous attribution, analytics, and conversion rate optimization.</p>
+              </div>
+              <div class="glass-dark p-8 rounded-3xl border border-white/10">
+                <div class="text-2xl font-extrabold text-cw-sky mb-3">03</div>
+                <h3 class="text-xl font-bold mb-2">Transparent Communication</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">Weekly reporting, direct strategist access, and clear accountability at every stage of growth.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: Our Process Timeline -->
+        <section class="py-20 lg:py-28 bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+              <span class="text-xs font-bold uppercase tracking-[0.22em] text-cw-electric">Methodology</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-cw-navy mt-2">OUR PROVEN 4-STAGE PROCESS</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="p-8 rounded-3xl bg-cw-light border border-slate-200">
+                <div class="text-3xl font-extrabold text-cw-electric mb-4">01</div>
+                <h3 class="text-lg font-bold text-cw-navy mb-2">DISCOVER</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">Understand the business, competitive landscape, and target audience across Delhi NCR.</p>
+              </div>
+              <div class="p-8 rounded-3xl bg-cw-light border border-slate-200">
+                <div class="text-3xl font-extrabold text-cw-electric mb-4">02</div>
+                <h3 class="text-lg font-bold text-cw-navy mb-2">STRATEGIZE</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">Develop customized growth strategies, media plans, and creative positioning.</p>
+              </div>
+              <div class="p-8 rounded-3xl bg-cw-light border border-slate-200">
+                <div class="text-3xl font-extrabold text-cw-electric mb-4">03</div>
+                <h3 class="text-lg font-bold text-cw-navy mb-2">EXECUTE</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">Launch campaigns, build digital experiences, and deploy performance marketing.</p>
+              </div>
+              <div class="p-8 rounded-3xl bg-cw-light border border-slate-200">
+                <div class="text-3xl font-extrabold text-cw-electric mb-4">04</div>
+                <h3 class="text-lg font-bold text-cw-navy mb-2">GROW</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">Measure, optimize, and scale successful campaigns for maximum ROI.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 7: Portfolio Showcase -->
+        <section class="py-20 lg:py-28 bg-cw-light border-t border-slate-200/70">
+          <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-[0.22em] text-cw-electric">Our Work & Concepts</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-cw-navy mt-2">PORTFOLIO SHOWCASE</h2>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              ${filteredProjects.map(proj => `
+                <div class="group rounded-3xl overflow-hidden border border-slate-200 bg-white hover:shadow-2xl transition-all flex flex-col">
+                  <div class="relative h-64 overflow-hidden bg-cw-midnight">
+                    <img src="${escapeHtml(proj.imageUrl)}" alt="${escapeHtml(proj.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/900x500/07152E/38BDF8?text=CloudWings+Concept'" />
+                    <div class="absolute top-4 left-4 flex items-center gap-2">
+                      <span class="px-3 py-1 rounded-full bg-cw-navy/90 text-cw-sky text-xs font-bold">${escapeHtml(proj.industry)}</span>
+                      <span class="px-3 py-1 rounded-full bg-amber-500 text-cw-midnight text-xs font-extrabold">Sample Concept</span>
+                    </div>
+                  </div>
+                  <div class="p-7">
+                    <h3 class="text-xl font-bold text-cw-navy group-hover:text-cw-electric transition mb-2">${escapeHtml(proj.title)}</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">${escapeHtml(proj.summary)}</p>
+                    <button onclick="navigatePublic('contact')" class="text-sm font-bold text-cw-electric hover:underline">Discuss Similar Project →</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 8: Testimonials -->
+        <section class="py-20 lg:py-28 bg-white">
+          <div class="max-w-5xl mx-auto px-4 sm:px-8 text-center">
+            <span class="text-xs font-bold uppercase tracking-[0.22em] text-cw-electric">Client Testimonials</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-cw-navy mt-2 mb-12">WHAT OUR CLIENTS SAY</h2>
+            <div class="grid md:grid-cols-2 gap-8 text-left">
+              ${publishedTestimonials.map(t => `
+                <div class="p-8 rounded-3xl bg-cw-light border border-slate-200 flex flex-col justify-between">
+                  <p class="text-slate-700 text-base italic leading-relaxed mb-6">"${escapeHtml(t.quote)}"</p>
+                  <div>
+                    <div class="font-bold text-cw-navy">${escapeHtml(t.author)}</div>
+                    <div class="text-xs text-slate-500 mt-0.5">${escapeHtml(t.role)}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 9: Blog and Insights -->
+        <section class="py-20 lg:py-28 bg-cw-light border-t border-slate-200/70">
+          <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-[0.22em] text-cw-electric">Insights & Articles</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-cw-navy mt-2">LATEST DIGITAL MARKETING THOUGHTS</h2>
+              </div>
+              <button onclick="navigatePublic('blog')" class="text-sm font-bold text-cw-electric hover:underline">View All Articles →</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              ${latestBlogs.map(b => `
+                <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div class="h-48 overflow-hidden bg-cw-midnight">
+                      <img src="${escapeHtml(b.imageUrl)}" alt="${escapeHtml(b.title)}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/800x450/07152E/38BDF8?text=Blog'" />
+                    </div>
+                    <div class="p-7">
+                      <div class="text-xs font-bold text-cw-electric mb-2">${escapeHtml(b.category)} • ${escapeHtml(b.readTime)}</div>
+                      <h3 class="text-lg font-bold text-cw-navy mb-2">${escapeHtml(b.title)}</h3>
+                      <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(b.excerpt)}</p>
+                    </div>
+                  </div>
+                  <div class="p-7 pt-0">
+                    <button onclick="navigatePublic('blog')" class="text-xs font-bold text-cw-electric hover:underline">Read Article →</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 10: Final CTA -->
+        <section class="py-20 px-4 sm:px-8 bg-white">
+          <div class="max-w-7xl mx-auto hero-mesh rounded-[32px] p-10 sm:p-16 text-center text-white relative overflow-hidden shadow-2xl">
+            <div class="max-w-3xl mx-auto relative z-10 space-y-6">
+              <span class="inline-block px-4 py-1.5 rounded-full glass-dark text-xs font-bold uppercase tracking-widest text-cw-sky">
+                Delhi, Noida, Greater Noida, Gurugram, Ghaziabad & Faridabad
+              </span>
+              <h2 class="text-3xl sm:text-5xl font-extrabold leading-tight">
+                ${escapeHtml(hp.finalCtaHeading)}
+              </h2>
+              <p class="text-base sm:text-lg text-slate-300">
+                ${escapeHtml(hp.finalCtaDescription)}
+              </p>
+              <div class="pt-3 flex flex-wrap justify-center gap-4">
+                <button onclick="navigatePublic('contact')" class="px-8 py-4 rounded-full bg-cw-electric hover:bg-cw-sky hover:text-cw-midnight text-white font-bold text-base shadow-xl transition">
+                  Start Your Project →
+                </button>
+                <a href="${getWhatsAppUrl()}" target="_blank" rel="noopener" class="px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-base shadow-xl transition">
+                  Chat on WhatsApp (${escapeHtml(cmsData.settings.phone)})
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    /* =====================================================================
+       8. SUB-PAGES (Services, Detail, About, Blog, Contact)
+       ===================================================================== */
+    function renderPublicSubPage() {
+      const r = uiState.publicRoute;
+
+      if (r === 'services') {
+        return `
+          <section class="hero-mesh text-white py-20 px-4 sm:px-8 text-center">
+            <div class="max-w-4xl mx-auto space-y-4">
+              <span class="text-xs font-bold uppercase tracking-widest text-cw-sky">Capabilities</span>
+              <h1 class="text-4xl sm:text-5xl font-extrabold">DIGITAL MARKETING & CREATIVE SERVICES</h1>
+              <p class="text-slate-300 text-lg">Comprehensive strategy, creative production, web engineering, and performance acquisition.</p>
+            </div>
+          </section>
+          <section class="py-16 max-w-7xl mx-auto px-4 sm:px-8 grid md:grid-cols-2 gap-8">
+            ${cmsData.services.filter(s => s.published).map((s, idx) => `
+              <div class="rounded-3xl border border-slate-200 overflow-hidden bg-white shadow-sm hover:shadow-xl transition flex flex-col">
+                <div class="h-64 w-full relative bg-cw-midnight">
+                  <img src="${escapeHtml(s.imageUrl)}" alt="${escapeHtml(s.title)}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/900x500/07152E/38BDF8?text=${encodeURIComponent(s.title)}'" />
+                  <div class="absolute top-4 left-4 px-3.5 py-1 rounded-full bg-cw-navy/90 text-cw-sky text-xs font-bold">0${idx + 1}</div>
+                </div>
+                <div class="p-7 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h2 class="text-2xl font-bold text-cw-navy mb-3">${escapeHtml(s.title)}</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">${escapeHtml(s.fullDesc)}</p>
+                  </div>
+                  <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                    <button onclick="navigatePublic('service-detail', '${s.slug}')" class="px-5 py-2.5 rounded-full bg-cw-electric text-white text-xs font-bold">Service Details →</button>
+                    <a href="${getWhatsAppUrl('Hello CloudWings Agency, I want to enquire about ' + s.title)}" target="_blank" rel="noopener" class="text-xs font-bold text-emerald-600 hover:underline">WhatsApp Specialist</a>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </section>
+        `;
+      }
+
+      if (r === 'service-detail') {
+        const srv = cmsData.services.find(s => s.slug === uiState.selectedSlug) || cmsData.services[3];
+        return `
+          <section class="hero-mesh text-white py-20 px-4 sm:px-8">
+            <div class="max-w-5xl mx-auto space-y-4">
+              <button onclick="navigatePublic('services')" class="text-xs font-bold text-cw-sky hover:underline">← Back to All Services</button>
+              <h1 class="text-3xl sm:text-5xl font-extrabold">${escapeHtml(srv.title)}</h1>
+              <p class="text-lg text-slate-300 max-w-3xl">${escapeHtml(srv.shortDesc)}</p>
+            </div>
+          </section>
+          <section class="py-16 max-w-5xl mx-auto px-4 sm:px-8 grid md:grid-cols-12 gap-10">
+            <div class="md:col-span-7 space-y-6">
+              <div class="rounded-3xl overflow-hidden shadow-lg bg-cw-midnight h-80">
+                <img src="${escapeHtml(srv.imageUrl)}" alt="${escapeHtml(srv.title)}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/900x500/07152E/38BDF8?text=${encodeURIComponent(srv.title)}'" />
+              </div>
+              <h2 class="text-2xl font-bold text-cw-navy">How CloudWings Executes ${escapeHtml(srv.title)}</h2>
+              <p class="text-slate-600 leading-relaxed">${escapeHtml(srv.fullDesc)}</p>
+              <h3 class="text-lg font-bold text-cw-navy pt-2">Key Deliverables & Strategic Benefits</h3>
+              <ul class="space-y-3">
+                ${(srv.benefits || []).map(b => `
+                  <li class="p-4 rounded-2xl bg-cw-light border border-slate-200 text-sm font-medium text-cw-navy flex items-center gap-3">
+                    <span class="w-6 h-6 rounded-full bg-cw-electric text-white text-xs flex items-center justify-center shrink-0">✓</span>
+                    <span>${escapeHtml(b)}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+            <div class="md:col-span-5">
+              <div class="sticky top-28 rounded-3xl bg-cw-navy text-white p-7 space-y-5 shadow-xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-cw-sky">Start Your Growth Plan</span>
+                <h3 class="text-2xl font-bold">Request a Custom Proposal</h3>
+                <p class="text-sm text-slate-300">Speak directly with our Delhi NCR strategy team about ${escapeHtml(srv.title)}.</p>
+                <button onclick="navigatePublic('contact')" class="w-full py-3.5 rounded-xl bg-cw-electric hover:bg-cw-sky hover:text-cw-midnight font-bold text-sm transition">Book Strategy Call</button>
+                <a href="${getWhatsAppUrl('Hello CloudWings Agency, I am interested in ' + srv.title)}" target="_blank" rel="noopener" class="block text-center w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 font-bold text-sm transition">Chat on WhatsApp</a>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      if (r === 'about') {
+        return `
+          <section class="hero-mesh text-white py-20 px-4 sm:px-8 text-center">
+            <div class="max-w-4xl mx-auto space-y-4">
+              <span class="text-xs font-bold uppercase tracking-widest text-cw-sky">About CloudWings Agency</span>
+              <h1 class="text-4xl sm:text-5xl font-extrabold">WE DON'T JUST BUILD BRANDS. WE HELP THEM SOAR.</h1>
+              <p class="text-slate-300 text-lg">Serving Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad.</p>
+            </div>
+          </section>
+          <section class="py-16 max-w-5xl mx-auto px-4 sm:px-8 space-y-12">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-cw-navy">Our Creative Philosophy</h2>
+                <p class="text-slate-600 leading-relaxed">${escapeHtml(cmsData.homepage.philosophy)}</p>
+                <p class="text-slate-600 leading-relaxed">${escapeHtml(cmsData.homepage.whyExists)}</p>
+              </div>
+              <div class="rounded-3xl overflow-hidden shadow-xl h-72">
+                <img src="${escapeHtml(cmsData.settings.aboutImageUrl)}" class="w-full h-full object-cover" />
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      if (r === 'industries') {
+        return `
+          <section class="hero-mesh text-white py-20 px-4 sm:px-8 text-center">
+            <div class="max-w-4xl mx-auto space-y-4">
+              <span class="text-xs font-bold uppercase tracking-widest text-cw-sky">Sectors</span>
+              <h1 class="text-4xl sm:text-5xl font-extrabold">INDUSTRIES WE SERVE IN DELHI NCR</h1>
+              <p class="text-slate-300 text-lg">Custom digital marketing frameworks for real estate, healthcare, education, e-commerce, and B2B technology.</p>
+            </div>
+          </section>
+          <section class="py-16 max-w-7xl mx-auto px-4 sm:px-8 grid md:grid-cols-3 gap-6">
+            ${cmsData.industries.map(ind => `
+              <div class="p-8 rounded-3xl bg-cw-light border border-slate-200">
+                <h2 class="text-xl font-bold text-cw-navy mb-3">${escapeHtml(ind.name)}</h2>
+                <p class="text-slate-600 text-sm leading-relaxed">${escapeHtml(ind.summary)}</p>
+              </div>
+            `).join('')}
+          </section>
+        `;
+      }
+
+      if (r === 'portfolio') {
+        return `
+          <section class="hero-mesh text-white py-20 px-4 sm:px-8 text-center">
+            <div class="max-w-4xl mx-auto space-y-4">
+              <span class="text-xs font-bold uppercase tracking-widest text-cw-sky">Work</span>
+              <h1 class="text-4xl sm:text-5xl font-extrabold">PORTFOLIO & CASE STUDIES</h1>
+              <p class="text-slate-300 text-lg">Explore our strategic work and sample concepts across Delhi NCR.</p>
+            </div>
+          </section>
+          <section class="py-16 max-w-7xl mx-auto px-4 sm:px-8 grid md:grid-cols-2 gap-8">
+            ${cmsData.portfolio.map(proj => `
+              <div class="rounded-3xl border border-slate-200 bg-white overflow-hidden shadow-sm flex flex-col">
+                <div class="h-64 bg-cw-midnight">
+                  <img src="${escapeHtml(proj.imageUrl)}" alt="${escapeHtml(proj.title)}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/900x500/07152E/38BDF8?text=Concept'" />
+                </div>
+                <div class="p-7">
+                  <span class="px-3 py-1 rounded-full bg-cw-light text-cw-electric text-xs font-bold">${escapeHtml(proj.industry)}</span>
+                  <h2 class="text-xl font-bold text-cw-navy mt-3 mb-2">${escapeHtml(proj.title)}</h2>
+                  <p class="text-slate-600 text-sm leading-relaxed mb-4">${escapeHtml(proj.summary)}</p>
+                  <button onclick="navigatePublic('contact')" class="text-xs font-bold text-cw-electric hover:underline">Discuss Similar Project →</button>
+                </div>
+              </div>
+            `).join('')}
+          </section>
+        `;
+      }
+
+      if (r === 'blog') {
+        return `
+          <section class="hero-mesh text-white py-20 px-4 sm:px-8 text-center">
+            <div class="max-w-4xl mx-auto space-y-4">
+              <span class="text-xs font-bold uppercase tracking-widest text-cw-sky">Insights</span>
+              <h1 class="text-4xl sm:text-5xl font-extrabold">CLOUDED WINGS INSIGHTS & BLOG</h1>
+              <p class="text-slate-300 text-lg">Actionable thinking on SEO, performance marketing, and branding.</p>
+            </div>
+          </section>
+          <section class="py-16 max-w-7xl mx-auto px-4 sm:px-8 grid md:grid-cols-2 gap-8">
+            ${cmsData.blogs.map(b => `
+              <div class="rounded-3xl border border-slate-200 bg-white overflow-hidden shadow-sm flex flex-col justify-between">
+                <div>
+                  <div class="h-52 bg-cw-midnight">
+                    <img src="${escapeHtml(b.imageUrl)}" class="w-full h-full object-cover" />
+                  </div>
+                  <div class="p-7">
+                    <div class="text-xs font-bold text-cw-electric mb-2">${escapeHtml(b.category)} • ${escapeHtml(b.readTime)}</div>
+                    <h2 class="text-xl font-bold text-cw-navy mb-3">${escapeHtml(b.title)}</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">${escapeHtml(b.excerpt)}</p>
+                  </div>
+                </div>
+                <div class="p-7 pt-0">
+                  <button onclick="navigatePublic('contact')" class="text-xs font-bold text-cw-electric hover:underline">Read Full Article →</button>
+                </div>
+              </div>
+            `).join('')}
+          </section>
+        `;
+      }
+
+      if (r === 'contact') {
+        return `
+          <section class="hero-mesh text-white py-20 px-4 sm:px-8">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 items-start">
+              <div class="lg:col-span-5 space-y-6">
+                <span class="text-xs font-bold uppercase tracking-widest text-cw-sky">Start a Conversation</span>
+                <h1 class="text-4xl sm:text-5xl font-extrabold">LET'S MAKE YOUR BRAND FLY HIGHER.</h1>
+                <p class="text-slate-300 leading-relaxed">
+                  Serving Delhi, Noida, Greater Noida, Gurugram, Ghaziabad and Faridabad. Submissions sync directly to our Admin Leads CRM.
+                </p>
+                <div class="space-y-4 pt-2">
+                  <div class="glass-dark p-5 rounded-2xl">
+                    <div class="text-xs text-cw-sky font-bold uppercase">Direct Phone & WhatsApp</div>
+                    <a href="tel:${escapeHtml(cmsData.settings.phone.replace(/\s+/g, ''))}" class="text-xl font-bold text-white block mt-1">${escapeHtml(cmsData.settings.phone)}</a>
+                    <a href="${getWhatsAppUrl()}" target="_blank" rel="noopener" class="inline-block mt-2 text-xs font-bold text-emerald-400 hover:underline">Open WhatsApp Chat →</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="lg:col-span-7 bg-white text-cw-navy rounded-3xl p-8 sm:p-10 shadow-2xl">
+                <h2 class="text-2xl font-extrabold mb-1">Project Enquiry Form</h2>
+                <form onsubmit="handleContactLeadSubmit(event)" class="space-y-4 mt-4">
+                  <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-xs font-bold text-slate-700 mb-1">Full Name *</label>
+                      <input type="text" id="leadName" required placeholder="Your full name" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:border-cw-electric focus:outline-none" />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-bold text-slate-700 mb-1">Work Email *</label>
+                      <input type="email" id="leadEmail" required placeholder="you@company.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:border-cw-electric focus:outline-none" />
+                    </div>
+                  </div>
+
+                  <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-xs font-bold text-slate-700 mb-1">Phone / WhatsApp Number *</label>
+                      <input type="tel" id="leadPhone" required placeholder="+91 98XXXXXXXX" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:border-cw-electric focus:outline-none" />
+                      <p class="text-[11px] text-slate-400 mt-1">Required: Enter valid 10-digit mobile number</p>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-bold text-slate-700 mb-1">Company / Brand Name</label>
+                      <input type="text" id="leadCompany" placeholder="Your company name" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:border-cw-electric focus:outline-none" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Required Services</label>
+                    <select id="leadService" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:border-cw-electric focus:outline-none bg-white">
+                      ${cmsData.services.map(s => `<option value="${escapeHtml(s.title)}">${escapeHtml(s.title)}</option>`).join('')}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Project Brief & Goals *</label>
+                    <textarea id="leadBrief" rows="4" required placeholder="Share your location (Delhi, Noida, Gurugram, etc.), timeline, and growth objectives..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:border-cw-electric focus:outline-none"></textarea>
+                  </div>
+
+                  <button type="submit" class="w-full py-4 rounded-xl bg-cw-electric hover:bg-cw-navy text-white font-bold text-sm shadow-lg transition">
+                    Submit Enquiry to CloudWings Agency →
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      return `<div class="py-20 text-center text-xl font-bold">Page under development.</div>`;
+    }
+
+    /* =====================================================================
+       9. STRICT CONTACT FORM VALIDATION & LEAD SUBMISSION
+       ===================================================================== */
+    function handleContactLeadSubmit(e) {
+      e.preventDefault();
+      const fullName = document.getElementById('leadName').value.trim();
+      const email = document.getElementById('leadEmail').value.trim();
+      const phoneInput = document.getElementById('leadPhone').value.trim();
+      const company = document.getElementById('leadCompany').value.trim();
+      const requiredServices = document.getElementById('leadService').value;
+      const projectDescription = document.getElementById('leadBrief').value.trim();
+
+      // Strict phone validation: must not be empty, must not contain alphabetical letters, and must have at least 10 valid digits
+      if (!phoneInput) {
+        showToast('Phone number is strictly required.', 'error');
+        document.getElementById('leadPhone').focus();
+        return;
+      }
+      // Check for alphabetic characters in phone field
+      if (/[a-zA-Z]/.test(phoneInput)) {
+        showToast('Phone number cannot contain letters. Please enter a valid phone number.', 'error');
+        document.getElementById('leadPhone').focus();
+        return;
+      }
+      // Extract digits to verify minimum length
+      const digitsOnly = phoneInput.replace(/\D/g, '');
+      if (digitsOnly.length < 10) {
+        showToast('Please enter a valid 10-digit mobile number.', 'error');
+        document.getElementById('leadPhone').focus();
+        return;
+      }
+
+      const newLead = {
+        id: 'LEAD-' + (1001 + cmsData.leads.length),
+        fullName,
+        email,
+        phone: phoneInput,
+        company,
+        requiredServices,
+        projectDescription,
+        status: 'New',
+        submittedAt: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+      };
+
+      cmsData.leads.unshift(newLead);
+      saveCmsData();
+      e.target.reset();
+      showToast('Enquiry received successfully! Saved to CloudWings Lead CRM.', 'success');
+    }
+
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('footerNewsletterEmail');
+      const email = input.value.trim().toLowerCase();
+      if (!email) return;
+      cmsData.subscribers.unshift({
+        id: 'SUB-' + String(cmsData.subscribers.length + 1).padStart(2, '0'),
+        email,
+        subscribedAt: new Date().toISOString().slice(0, 10)
+      });
+      saveCmsData();
+      input.value = '';
+      showToast('Subscribed to CloudWings Insights!', 'success');
+    }
+
+    /* =====================================================================
+       10. ADMIN CMS DASHBOARD (/admin)
+       ===================================================================== */
+    function renderAdminShell() {
+      if (!uiState.adminAuthenticated) {
+        return `
+          <div class="min-h-screen hero-mesh flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl max-w-md w-full p-8 sm:p-10 shadow-2xl border border-slate-200 space-y-6">
+              <div class="flex justify-between items-center">
+                ${getCloudWingsLogoSVG('light', cmsData.settings.customLogoUrl)}
+                <button onclick="navigatePublic('home')" class="text-xs font-bold text-cw-electric hover:underline">← Public Site</button>
+              </div>
+              <div>
+                <span class="px-2.5 py-1 rounded-full bg-cw-light text-cw-electric text-xs font-bold">Protected Route: /admin</span>
+                <h1 class="text-2xl font-extrabold text-cw-navy mt-2">CloudWings CMS Sign In</h1>
+              </div>
+              <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Administrator Email</label>
+                  <input type="email" id="adminLoginEmail" value="admin@cloudwingsagency.in" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
+                  <input type="password" id="adminLoginPass" value="CloudWings@2026" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm" />
+                </div>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-cw-electric text-white font-bold text-sm shadow-lg">Sign In to Admin Dashboard →</button>
+              </form>
+            </div>
+          </div>
+        `;
+      }
+
+      const navItems = [
+        { id: 'dashboard', label: '1. Dashboard', icon: '📊' },
+        { id: 'services', label: '2. Services Manager', icon: '🚀' },
+        { id: 'media', label: '3. Media Library', icon: '🖼️' },
+        { id: 'leads', label: '4. Leads CRM', icon: '📥', badge: cmsData.leads.filter(l => l.status === 'New').length }
+      ];
+
+      return `
+        <div class="min-h-screen bg-cw-light flex flex-col lg:flex-row">
+          <aside class="lg:w-72 bg-cw-navy text-slate-200 shrink-0 flex flex-col justify-between border-r border-white/10">
+            <div>
+              <div class="p-5 border-b border-white/10 flex items-center justify-between">
+                <div>
+                  <div class="text-white font-display font-extrabold text-lg">Cloud<span class="text-cw-sky">Wings</span> CMS</div>
+                  <div class="text-[11px] text-cw-sky/80">SuperAdmin • /admin</div>
+                </div>
+              </div>
+              <nav class="p-3 space-y-1">
+                ${navItems.map(item => `
+                  <button onclick="uiState.adminTab='${item.id}'; renderApp()"
+                          class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition ${
+                            uiState.adminTab === item.id ? 'bg-cw-electric text-white' : 'text-slate-300 hover:bg-white/10'
+                          }">
+                    <span>${item.icon} ${item.label}</span>
+                    ${item.badge ? `<span class="px-2 py-0.5 rounded-full bg-cw-sky text-cw-midnight text-[10px] font-extrabold">${item.badge}</span>` : ''}
+                  </button>
+                `).join('')}
+                <button onclick="uiState.adminAuthenticated=false; showToast('Logged out.'); renderApp()"
+                        class="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-red-300 hover:bg-red-500/20 mt-4">
+                  🚪 Logout
+                </button>
+              </nav>
+            </div>
+            <div class="p-4 border-t border-white/10">
+              <button onclick="navigatePublic('home')" class="w-full py-2.5 px-4 rounded-xl bg-cw-sky text-cw-midnight font-bold text-xs">
+                ↗ View Live Public Website
+              </button>
+            </div>
+          </aside>
+
+          <main class="flex-1 p-5 sm:p-8 lg:p-10 overflow-y-auto">
+            <div class="max-w-6xl mx-auto">
+              ${renderAdminTabContent()}
+            </div>
+          </main>
+        </div>
+      `;
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      uiState.adminAuthenticated = true;
+      showToast('Welcome to CloudWings Agency CMS!', 'success');
+      renderApp();
+    }
+
+    function renderAdminTabContent() {
+      const tab = uiState.adminTab;
+      if (tab === 'dashboard') {
+        return `
+          <div class="space-y-6">
+            <h1 class="text-2xl font-extrabold text-cw-navy">CMS Command Dashboard</h1>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="bg-white rounded-2xl p-5 border border-slate-200">
+                <div class="text-xs font-semibold text-slate-500">Total Enquiries</div>
+                <div class="text-3xl font-extrabold text-cw-navy mt-1">${cmsData.leads.length}</div>
+              </div>
+              <div class="bg-white rounded-2xl p-5 border border-slate-200">
+                <div class="text-xs font-semibold text-slate-500">Published Services</div>
+                <div class="text-3xl font-extrabold text-cw-electric mt-1">${cmsData.services.filter(s => s.published).length}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      if (tab === 'services') {
+        return `
+          <div class="space-y-6">
+            <h1 class="text-2xl font-extrabold text-cw-navy">Services & Images Manager</h1>
+            <div class="space-y-4">
+              ${cmsData.services.map((s, idx) => `
+                <div class="bg-white rounded-2xl border border-slate-200 p-5 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                  <div class="flex items-center gap-4 w-full sm:w-auto">
+                    <img src="${escapeHtml(s.imageUrl)}" class="w-16 h-16 rounded-xl object-cover shrink-0" onerror="this.src='https://placehold.co/100x100/07152E/38BDF8?text=Img'" />
+                    <div>
+                      <div class="font-bold text-cw-navy text-sm">${escapeHtml(s.title)}</div>
+                      <div class="text-xs text-slate-400">/services/${escapeHtml(s.slug)}</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <input type="url" value="${escapeHtml(s.imageUrl)}" onchange="cmsData.services[${idx}].imageUrl=this.value; saveCmsData(); showToast('Image updated successfully','success'); renderApp()" class="px-3 py-2 rounded-xl border border-slate-300 text-xs w-64" placeholder="Image URL..." />
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      if (tab === 'media') {
+        return `
+          <div class="space-y-6">
+            <h1 class="text-2xl font-extrabold text-cw-navy">Media Library</h1>
+            <div class="grid sm:grid-cols-2 gap-4">
+              ${cmsData.media.map(m => `
+                <div class="bg-white rounded-2xl border border-slate-200 p-4 flex gap-4 items-center">
+                  <img src="${escapeHtml(m.url)}" class="w-20 h-20 rounded-xl object-cover" />
+                  <div>
+                    <div class="font-bold text-cw-navy text-xs">${escapeHtml(m.name)}</div>
+                    <div class="text-[11px] text-slate-400">${escapeHtml(m.category)}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      return `
+        <div class="space-y-6">
+          <h1 class="text-2xl font-extrabold text-cw-navy">Leads CRM (${cmsData.leads.length})</h1>
+          <div class="space-y-3">
+            ${cmsData.leads.map(l => `
+              <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                <div class="font-bold text-cw-navy">${escapeHtml(l.fullName)} (${escapeHtml(l.phone)})</div>
+                <div class="text-xs text-cw-electric mt-1">Service: ${escapeHtml(l.requiredServices)}</div>
+                <p class="text-xs text-slate-600 mt-2">${escapeHtml(l.projectDescription)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderApp() {
+      const root = document.getElementById('appRoot');
+      if (uiState.mode === 'admin') {
+        root.innerHTML = renderAdminShell();
+      } else {
+        root.innerHTML = `
+          ${renderPublicHeader()}
+          <main>
+            ${uiState.publicRoute === 'home' ? renderHomeView() : renderPublicSubPage()}
+          </main>
+          ${renderPublicFooter()}
+        `;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('preloaderLogo').innerHTML = getCloudWingsLogoSVG('dark');
+      renderApp();
+      setTimeout(() => {
+        const pre = document.getElementById('cwPreloader');
+        if (pre) {
+          pre.style.opacity = '0';
+          setTimeout(() => pre.remove(), 500);
+        }
+      }, 500);
+    });
